@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Nov 24 18:56:23 2025
+# Process ID: 5452
+# Current directory: D:/workspace/vga_project/vga_project.runs/impl_1
+# Command line: vivado.exe -log VGA_TOP.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source VGA_TOP.tcl -notrace
+# Log file: D:/workspace/vga_project/vga_project.runs/impl_1/VGA_TOP.vdi
+# Journal file: D:/workspace/vga_project/vga_project.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source VGA_TOP.tcl -notrace

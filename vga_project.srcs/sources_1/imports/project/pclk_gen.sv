@@ -10,6 +10,7 @@ module pixel_clk_gen (
     always_ff @(posedge clk, posedge reset) begin
         if (reset) begin
             p_counter <= 0;
+            pclk      <= 1'b0;
         end else begin
             if (p_counter == 3) begin
                 p_counter <= 0;

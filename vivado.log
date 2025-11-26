@@ -1,0 +1,68 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Nov 24 18:27:13 2025
+# Process ID: 15100
+# Current directory: D:/workspace/vga_project
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent15600 D:\workspace\vga_project\vga_project.xpr
+# Log file: D:/workspace/vga_project/vivado.log
+# Journal file: D:/workspace/vga_project\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/workspace/vga_project/vga_project.xpr
+WARNING: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'D:/workspace/vga_project/vga_project.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2020.2/data/ip'.
+update_compile_order -fileset sources_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+INFO: [Labtools 27-2058] connect_hw_server command cancelled.
+INFO: [Common 17-344] 'connect_hw_server' was cancelled
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+[Mon Nov 24 18:27:35 2025] Launched synth_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/synth_1/runme.log
+[Mon Nov 24 18:27:35 2025] Launched impl_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/impl_1/runme.log
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory D:/workspace/vga_project/vga_project.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+[Mon Nov 24 18:35:16 2025] Launched synth_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/synth_1/runme.log
+[Mon Nov 24 18:35:16 2025] Launched impl_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/impl_1/runme.log
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory D:/workspace/vga_project/vga_project.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+[Mon Nov 24 18:37:17 2025] Launched synth_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/synth_1/runme.log
+[Mon Nov 24 18:37:17 2025] Launched impl_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/impl_1/runme.log
+open_run impl_1
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1245.918 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 33 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.2
+INFO: [Common 17-344] 'open_run' was cancelled
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory D:/workspace/vga_project/vga_project.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+[Mon Nov 24 18:55:50 2025] Launched synth_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/synth_1/runme.log
+[Mon Nov 24 18:55:50 2025] Launched impl_1...
+Run output will be captured here: D:/workspace/vga_project/vga_project.runs/impl_1/runme.log
+exit
+INFO: [Common 17-206] Exiting Vivado at Mon Nov 24 18:57:44 2025...
