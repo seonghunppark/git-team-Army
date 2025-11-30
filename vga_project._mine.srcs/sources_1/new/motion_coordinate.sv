@@ -34,20 +34,18 @@ endmodule
 
 module motion_coordinate (
     // global signals
-    input  logic       clk,
-    input  logic       reset,
+    input logic       clk,
+    input logic       reset,
     // VGA
-    input  logic       DE,
-    input  logic       h_sync,
-    input  logic       v_sync,
-    input  logic [9:0] x_pixel,
-    input  logic [9:0] y_pixel,
+    input logic       DE,
+    input logic       h_sync,
+    input logic       v_sync,
+    input logic [9:0] x_pixel,
+    input logic [9:0] y_pixel,
     // internal
-    input  logic       motion_flag,
+    input logic       motion_flag
     // output
-    output logic [9:0] center_x,
-    output logic [9:0] center_y,
-    output logic       center_valid
+
 );
 
 endmodule

@@ -15,6 +15,7 @@ module buffer (
     output logic [                 15:0] curr_data
 );
 
+    logic [15:0] gray_data;
     logic [15:0] rData0, rData1;
 
     // CDC
@@ -29,11 +30,16 @@ module buffer (
     assign curr_data = (buf_sel_q == 1'b0) ? rData0 : rData1;
     assign prev_data = (buf_sel_q == 1'b0) ? rData1 : rData0;
 
+    gray_filter U_GRAY_FILTER (
+        .data     (wData),
+        .gray_data(gray_data)
+    );
+
     frame_buffer U_FB0 (
         .wclk (wclk),
         .we   (we && (buffer_sel == 1'b0)),
         .wAddr(wAddr),
-        .wData(wData),
+        .wData(gray_data),
         .rclk (rclk),
         .oe   (oe),
         .rAddr(rAddr),
@@ -44,13 +50,38 @@ module buffer (
         .wclk (wclk),
         .we   (we&& (buffer_sel == 1'b1)),
         .wAddr(wAddr),
-        .wData(wData),
+        .wData(gray_data),
         .rclk (rclk),
         .oe   (oe),
         .rAddr(rAddr),
         .rData(rData1)
     );
 
+endmodule
+
+module gray_filter (
+    input  logic [15:0] data,
+    output logic [15:0] gray_data
+);
+
+    logic [7:0] red, green, blue, gray;
+    logic [15:0] R_gray, G_gray, B_gray, sum;
+
+    always_comb begin
+        red = {data[15:11], 3'b000};
+        green = {data[10:5], 2'b00};
+        blue = {data[4:0], 3'b000};
+
+        R_gray = (red << 5) + (red << 4) + (red << 1) + red;
+        G_gray = (green << 7) + (green << 5) + (green << 4) + (green << 1) + green;
+        B_gray = (blue << 4) + (blue << 3) + (blue << 1);
+        sum = R_gray + G_gray + B_gray;
+        gray = sum[15:8];
+
+        gray_data[15:11] = gray[7:3];
+        gray_data[10:5] = gray[7:2];
+        gray_data[4:0] = gray[7:3];
+    end
 endmodule
 
 module frame_buffer (
