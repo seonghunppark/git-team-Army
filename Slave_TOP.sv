@@ -1,85 +1,63 @@
 `timescale 1ns / 1ps
 
-// module Slave_TOP_t (
-//     input  logic        clk,
-//     input  logic        reset,
-//     input  logic [11:0] data,
-//     input  logic        i_hsync,
-//     input  logic        i_vsync,
-//     input  logic        DE,
-//     output logic [ 3:0] red_port,
-//     output logic [ 3:0] green_port,
-//     output logic [ 3:0] blue_port,
-//     output logic        o_hsync,
-//     output logic        o_vsync
-// );
-
-//     always_ff @(posedge clk, posedge reset) begin
-//         if (reset) begin
-//             red_port   <= 0;
-//             green_port <= 0;
-//             blue_port  <= 0;
-//         end else begin
-//             if (DE) begin
-//                 red_port   <= {data[11:8]};
-//                 green_port <= {data[7:4]};
-//                 blue_port  <= {data[3:0]};
-//             end else begin
-//                 red_port   <= 0;
-//                 green_port <= 0;
-//                 blue_port  <= 0;
-//             end
-//         end
-
-//     end
-
-//     assign o_hsync = i_hsync;
-//     assign o_vsync = i_vsync;
-
-// endmodule
-
-
 module Slave_TOP (
-    input logic clk,
-    input logic [11:0] data,
-    input logic reset,
-    input logic i_href,
-    input logic i_vsync,
-    input logic pclk,
-    output logic [3:0] red_port,
-    output logic [3:0] green_port,
-    output logic [3:0] blue_port,
-    output logic href,
-    output logic vsync,
-    input logic reset_c,
-    output logic rising,
-    input logic [11:0] code
+    input  logic        clk,         // Slave 내부 clk:100Mhz
+    input  logic [11:0] data,
+    input  logic        reset,
+    input  logic        i_href,
+    input  logic        i_vsync,
+    input  logic        pclk,        // Master가 보내주는 pclk
+    output logic [ 3:0] red_port,
+    output logic [ 3:0] green_port,
+    output logic [ 3:0] blue_port,
+    output logic        href,
+    output logic        vsync,
+    input  logic        reset_c,
+    output logic        rising,
+    input  logic [11:0] code
 );
 
-    logic reset_c_1,reset_c_2;
+    logic reset_c_1, reset_c_2;
     logic [11:0] code_key;
     logic [11:0] scrambled_data;
+    logic reset_sync_reg1;
+    logic reset_sync_reg2;
+    
+
     lfsr_code_generator_s U_CODE_GENS (
-        .clk(pclk),
-        .rising(rising),
-        .code(code),
+        .clk     (pclk),
+        .rising  (rising),
+        .code    (code),
         .code_key(code_key)
     );
     assign href = i_href;
     assign vsync = i_vsync;
 
     assign scrambled_data = data ^ code_key;
-    assign rising = reset_c_1 & ~reset_c_2;
+    assign rising_1 = reset_c_1 & ~reset_c_2;
+    assign rising = reset_sync_reg2;
 
     always_ff @(posedge clk, posedge reset) begin
         if (reset) begin
             reset_c_1 <= 0;
-            reset_c_2 <=0;
+            reset_c_2 <= 0;
         end else begin
             reset_c_1 <= reset_c;
             reset_c_2 <= reset_c_1;
         end
     end
+
+    always_ff @(posedge pclk, posedge rising_1) begin
+        if (rising_1) begin
+            reset_sync_reg1 <= 1'b1;
+            reset_sync_reg2 <= 1'b1;
+        end else begin
+            reset_sync_reg1 <= 1'b0;
+            reset_sync_reg2 <= reset_sync_reg1;
+        end
+    end
+
+
 
     assign red_port   = scrambled_data[11:8];
     assign green_port = scrambled_data[7:4];
